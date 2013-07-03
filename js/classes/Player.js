@@ -27,7 +27,6 @@ define(function () {
     };
 
     Player.prototype.save = function () {
-        console.log('Saving Player');
         var data = {
             inventory: this.inventory,
             resources: this.resources
@@ -36,7 +35,6 @@ define(function () {
     };
 
     Player.prototype.load = function () {
-        console.log('Loading Player');
         var data = JSON.parse(atob(localStorage.getItem(saveName))) || {
             inventory: [],
             resources: 0

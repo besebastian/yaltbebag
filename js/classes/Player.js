@@ -6,6 +6,7 @@ define(function () {
     function Player() {
         this.resources = 0;
         this.inventory = [];
+        this.resourceModifier = 0.45;
     }
 
     Player.prototype.modResources = function (amount) {
@@ -14,7 +15,7 @@ define(function () {
     };
 
     Player.prototype.getResources = function () {
-        return this.resources;
+        return Math.floor(this.resources);
     };
 
     Player.prototype.addInventoryItem = function (item) {
@@ -29,16 +30,23 @@ define(function () {
     Player.prototype.save = function () {
         var data = {
             inventory: this.inventory,
-            resources: this.resources
+            resources: this.resources,
+            resourceModifier: this.resourceModifier
         };
         localStorage.setItem(saveName, btoa(JSON.stringify(data)));
+    };
+
+    Player.prototype.update = function () {
+        this.resources += this.resourceModifier;
     };
 
     Player.prototype.load = function () {
         var data = JSON.parse(atob(localStorage.getItem(saveName))) || {
             inventory: [],
-            resources: 0
+            resources: 0,
+            resourceModifier: 0.45
         };
+        this.resourceModifier = data.resourceModifier;
         this.inventory = data.inventory;
         this.resources = data.resources;
     };

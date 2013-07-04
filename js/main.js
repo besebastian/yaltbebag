@@ -67,7 +67,7 @@ require([
         }
 
         function update() {
-            player.modResources(1);
+            player.update();
         }
 
         function render() {

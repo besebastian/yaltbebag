@@ -30,7 +30,6 @@ define([
         this.weapon.left = null;
         this.weapon.right = null;
         this.notifications = new Notifications();
-        console.log(this.notifications);
     }
 
     Player.prototype.action = function (type) {
@@ -117,6 +116,7 @@ define([
             xp:             this.xp
         };
         localStorage.setItem(saveName, btoa(JSON.stringify(data)));
+        this.logSave();
     };
 
     Player.prototype.load = function () {
@@ -145,6 +145,15 @@ define([
     Player.prototype.update = function () {
         this.resources += this.resourceRate;
         this.cash += this.cashRate;
+    };
+
+    Player.prototype.logSave = function () {
+        console.log('Saved data: ', localStorage.getItem(saveName));
+    };
+
+    Player.prototype.loadLoggedSave = function (saveData) {
+        localStorage.setItem(saveName, saveData);
+        this.load();
     };
 
     return Player;

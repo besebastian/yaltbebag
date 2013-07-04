@@ -44,6 +44,15 @@ require([
         function uiHandlers() {
             var $buttonSave = $('.button-save');
             var $buttonLoad = $('.button-load');
+            var $buttonImport = $('.button-import');
+
+            $buttonImport.on('click', function (event) {
+                event.preventDefault();
+                var data = prompt('Paste save data string');
+                if (data !== '') {
+                    player.loadLoggedSave(data);
+                }
+            });
 
             $buttonSave.on('click', function (event) {
                 event.preventDefault();

@@ -2,18 +2,20 @@ require([
     'jquery',
     'Player',
     'Item',
-    'ItemTypes'
+    'ItemTypes',
+    'Notifications'
 ], function (
     $,
     Player,
     Item,
-    ItemTypes
+    ItemTypes,
+    Notifications
 ) {
     'use strict';
     (function () {
 
         var player;
-        var testItem;
+        var notifications;
 
         var autoSaveTimer;
 
@@ -23,7 +25,8 @@ require([
         var $actions;
 
         function init() {
-            player = new Player();
+            player          = new Player();
+            notifications   = new Notifications();
 
             autoSaveTimer = 0;
 
@@ -53,6 +56,16 @@ require([
                 autoSaveTimer = 0;
                 player.load();
                 render();
+            });
+        }
+
+        function itemHandlers() {
+            var $itemButtons = $('.item');
+            $.each($itemButtons, function () {
+                $(this).on('click', function (event) {
+                    event.preventDefault();
+                    notifications.alert('lol does nothing');
+                });
             });
         }
 
@@ -97,13 +110,15 @@ require([
             var items = player.getInventory();
             $inventory.html('');
             items.forEach(function (item) {
-                $inventory.append('<li><a href="#">' + item.name + '</a></li>');
+                $inventory.append('<li><a href="#" class="item">' + item.name + '</a></li>');
             });
+            itemHandlers();
         }
 
         function renderPlayer() {
             $player.html('');
             $player.append('<li>HP: ' + player.getHp() + '</li>');
+            $player.append('<li>XP: ' + player.getXp() + '</li>');
             $player.append('<li>Cash: ' + player.getCash() + '</li>');
         }
 

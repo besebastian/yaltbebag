@@ -14,6 +14,7 @@ define([
     function Player() {
         this.cash = 0;
         this.hp = 10;
+        this.xp = 0;
         this.cashRate = 0;
         this.resources = 0;
         this.inventory = [];
@@ -67,6 +68,15 @@ define([
         return Math.floor(this.resources);
     };
 
+    Player.prototype.getXp = function () {
+        return this.xp;
+    };
+
+    Player.prototype.modXp = function (amount) {
+        this.xp += amount;
+        return this;
+    };
+
     Player.prototype.getHp = function () {
         return this.hp;
     };
@@ -103,7 +113,8 @@ define([
             weapon:         this.weapon,
             cash:           this.cash,
             hp:             this.hp,
-            cashRate:       this.cashRate
+            cashRate:       this.cashRate,
+            xp:             this.xp
         };
         localStorage.setItem(saveName, btoa(JSON.stringify(data)));
     };
@@ -117,7 +128,8 @@ define([
             weapon: {},
             cash: 0,
             hp: 10,
-            cashRate: 0
+            cashRate: 0,
+            xp: 0
         };
         this.resourceRate   = data.resourceRate;
         this.inventory      = data.inventory;
@@ -127,6 +139,7 @@ define([
         this.cash           = data.cash;
         this.hp             = data.hp;
         this.cashRate       = data.cashRate;
+        this.xp             = data.xp;
     };
 
     Player.prototype.update = function () {

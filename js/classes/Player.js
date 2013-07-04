@@ -1,13 +1,62 @@
-define(function () {
+define([
+    'Notifications',
+    'Item',
+    'ItemTypes'
+], function (
+    Notifications,
+    Item,
+    ItemTypes
+) {
     'use strict';
 
     var saveName = 'webgame-proto';
 
     function Player() {
+        this.cash = 0;
+        this.hp = 10;
+        this.cashRate = 0;
         this.resources = 0;
         this.inventory = [];
-        this.resourceModifier = 0.45;
+        this.resourceRate = 0.45;
+        this.armour = {};
+        this.weapon = {};
+        this.armour.helm = null;
+        this.armour.shoulders = null;
+        this.armour.chest = null;
+        this.armour.legs = null;
+        this.armour.boots = null;
+        this.armour.hands = null;
+        this.weapon.left = null;
+        this.weapon.right = null;
+        this.notifications = new Notifications();
+        console.log(this.notifications);
     }
+
+    Player.prototype.action = function (type) {
+        switch (type) {
+            case 'adventure':
+                this.doAdventure();
+                break;
+        }
+        return this;
+    };
+
+    Player.prototype.doAdventure = function () {
+        if (Math.floor(Math.random() * 10) % 3 === 0) {
+            this.addInventoryItem(new Item("Random Adventure Item", ItemTypes.CODPIECE));
+            this.notifications.alert('You found a pointless item!');
+        }
+        if (Math.floor(Math.random() * 10) % 2 === 0) {
+            var amt = Math.ceil(Math.random() * 10)
+            this.modCash(amt);
+            this.notifications.alert('You found ' + amt + ' cash monies');
+        }
+
+    };
+
+    Player.prototype.setResourceRate = function (value) {
+        this.resourceRate = value;
+    };
 
     Player.prototype.modResources = function (amount) {
         this.resources += amount;
@@ -16,6 +65,24 @@ define(function () {
 
     Player.prototype.getResources = function () {
         return Math.floor(this.resources);
+    };
+
+    Player.prototype.getHp = function () {
+        return this.hp;
+    };
+
+    Player.prototype.modHp = function (amount) {
+        this.hp += amount;
+        return this;
+    };
+
+    Player.prototype.getCash = function () {
+        return this.cash;
+    }
+
+    Player.prototype.modCash = function (amount) {
+        this.cash += amount;
+        return this;
     };
 
     Player.prototype.addInventoryItem = function (item) {
@@ -29,26 +96,42 @@ define(function () {
 
     Player.prototype.save = function () {
         var data = {
-            inventory: this.inventory,
-            resources: this.resources,
-            resourceModifier: this.resourceModifier
+            inventory:      this.inventory,
+            resources:      this.resources,
+            resourceRate:   this.resourceRate,
+            armour:         this.armour,
+            weapon:         this.weapon,
+            cash:           this.cash,
+            hp:             this.hp,
+            cashRate:       this.cashRate
         };
         localStorage.setItem(saveName, btoa(JSON.stringify(data)));
-    };
-
-    Player.prototype.update = function () {
-        this.resources += this.resourceModifier;
     };
 
     Player.prototype.load = function () {
         var data = JSON.parse(atob(localStorage.getItem(saveName))) || {
             inventory: [],
             resources: 0,
-            resourceModifier: 0.45
+            resourceRate: 0.45,
+            armour: {},
+            weapon: {},
+            cash: 0,
+            hp: 10,
+            cashRate: 0
         };
-        this.resourceModifier = data.resourceModifier;
-        this.inventory = data.inventory;
-        this.resources = data.resources;
+        this.resourceRate   = data.resourceRate;
+        this.inventory      = data.inventory;
+        this.resources      = data.resources;
+        this.armour         = data.armour;
+        this.weapon         = data.weapon;
+        this.cash           = data.cash;
+        this.hp             = data.hp;
+        this.cashRate       = data.cashRate;
+    };
+
+    Player.prototype.update = function () {
+        this.resources += this.resourceRate;
+        this.cash += this.cashRate;
     };
 
     return Player;

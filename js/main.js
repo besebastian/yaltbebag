@@ -20,17 +20,17 @@ require([
         var $player;
         var $resources;
         var $inventory;
+        var $actions;
 
         function init() {
             player = new Player();
-            player.addInventoryItem(new Item('Flagrant Codpiece', ItemTypes.CODPIECE).modNutrition(100));
-            player.addInventoryItem(new Item('FACEGUARD LOL', ItemTypes.ARMOUR));
 
             autoSaveTimer = 0;
 
             $player     = $('#player');
             $resources  = $('#resources');
             $inventory  = $('#inventory');
+            $actions    = $('#actions');
 
             uiHandlers();
 
@@ -54,7 +54,18 @@ require([
                 player.load();
                 render();
             });
-        };
+        }
+
+        function adventureHandlers() {
+            var $actionButtons = $('.action');
+            $.each($actionButtons, function () {
+                $(this).on('click', function (event) {
+                    event.preventDefault();
+                    var action = $(this).data('action');
+                    player.action(action);
+                });
+            });
+        }
 
         function loop() {
             autoSaveTimer++;
@@ -74,10 +85,12 @@ require([
             renderResources();
             renderInventory();
             renderPlayer();
+            renderActions();
         }
 
         function renderResources() {
-            $resources.html(player.getResources());
+            $resources.html('');
+            $resources.append('<li>resources(lolwat?): ' + player.getResources() + '</li>');
         }
 
         function renderInventory() {
@@ -90,6 +103,14 @@ require([
 
         function renderPlayer() {
             $player.html('');
+            $player.append('<li>HP: ' + player.getHp() + '</li>');
+            $player.append('<li>Cash: ' + player.getCash() + '</li>');
+        }
+
+        function renderActions() {
+            $actions.html('');
+            $actions.append('<li><a href="#" class="action" data-action="adventure">Adventure!</a></li>');
+            adventureHandlers();
         }
 
         init();

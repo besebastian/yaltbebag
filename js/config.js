@@ -4,11 +4,14 @@ requirejs.config({
         jquery:     'vendor/jquery',
 
         // Classes
-        Player:     'classes/Player',
-        Item:       'classes/Item',
+        Player:         'classes/Player',
+        Item:           'classes/Item',
+        Notifications:  'classes/Notifications',
 
         // Enumerators
-        ItemTypes:  'enum/ItemTypes'
+        ItemTypes:      'enum/ItemTypes',
+        ArmourSlots:    'enum/ArmourSlots',
+        WeaponSlots:    'enum/WeaponSlots'
     },
     shims: {
         jquery: {

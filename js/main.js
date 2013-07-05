@@ -58,6 +58,7 @@ require([
                 event.preventDefault();
                 autoSaveTimer = 0;
                 player.save();
+                notifications.log('Game saved');
             });
 
             $buttonLoad.on('click', function (event) {
@@ -65,16 +66,7 @@ require([
                 autoSaveTimer = 0;
                 player.load();
                 render();
-            });
-        }
-
-        function itemHandlers() {
-            var $itemButtons = $('.item');
-            $.each($itemButtons, function () {
-                $(this).on('click', function (event) {
-                    event.preventDefault();
-                    notifications.alert('lol does nothing');
-                });
+                notifications.log('Game loaded');
             });
         }
 
@@ -94,6 +86,7 @@ require([
             if (autoSaveTimer === 100) {
                 autoSaveTimer = 0;
                 player.save();
+                notifications.log('Autosaving');
             }
             update();
             render();
@@ -112,22 +105,22 @@ require([
 
         function renderResources() {
             $resources.html('');
-            $resources.append('<li>resources(lolwat?): ' + player.getResources() + '</li>');
+            $resources.append('<li>Maguffinite ore: ' + player.getResources() + '</li>');
         }
 
         function renderInventory() {
             var items = player.getInventory();
             $inventory.html('');
             items.forEach(function (item) {
-                $inventory.append('<li><a href="#" class="item">' + item.name + '</a></li>');
+                $inventory.append('<li>' + item.name + '</li>');
             });
-            itemHandlers();
         }
 
         function renderPlayer() {
             $player.html('');
+            $player.append('<li>Level: ' + player.getLevel() + '</li>');
             $player.append('<li>HP: ' + player.getHp() + '</li>');
-            $player.append('<li>XP: ' + player.getXp() + '</li>');
+            $player.append('<li>XP: ' + player.getXp() + '/' + player.getToLevel() + '</li>');
             $player.append('<li>Cash: ' + player.getCash() + '</li>');
         }
 

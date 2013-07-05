@@ -12,6 +12,8 @@ define([
     var saveName = 'webgame-proto';
 
     function Player() {
+        this.level = 1;
+        this.toLevel = 45 + (5 * this.level);
         this.cash = 0;
         this.hp = 10;
         this.xp = 0;
@@ -41,17 +43,36 @@ define([
         return this;
     };
 
+    Player.prototype.getLevel = function () {
+        return this.level;
+    };
+
+    Player.prototype.getToLevel = function () {
+        return this.toLevel;
+    }
+
+    Player.prototype.levelUp = function () {
+        this.level++;
+        this.xp = (this.xp > this.toLevel) ? this.xp - this.toLevel: 0;
+        this.toLevel = 45 + (5 * this.level);
+        return this;
+    };
+
     Player.prototype.doAdventure = function () {
         if (Math.floor(Math.random() * 10) % 3 === 0) {
-            this.addInventoryItem(new Item("Random Adventure Item", ItemTypes.CODPIECE));
-            this.notifications.alert('You found a pointless item!');
+            var name = "Random Item";
+            var type = Math.floor(Math.random() * (Object.keys(ItemTypes).length - 2));
+            this.addInventoryItem(new Item(name, type));
+            this.notifications.log('' + name + ' found +');
         }
         if (Math.floor(Math.random() * 10) % 2 === 0) {
-            var amt = Math.ceil(Math.random() * 10)
+            var amt = Math.ceil(Math.random() * 10);
             this.modCash(amt);
-            this.notifications.alert('You found ' + amt + ' cash monies');
+            this.notifications.log('You found ' + amt + ' cash monies +');
         }
-
+        var xpGain = Math.ceil(Math.random() * 4);
+        this.notifications.log('You gain ' + xpGain + ' xp +');
+        this.xp += xpGain;
     };
 
     Player.prototype.setResourceRate = function (value) {
@@ -105,6 +126,8 @@ define([
 
     Player.prototype.save = function () {
         var data = {
+            level:          this.level,
+            toLevel:        this.toLevel,
             inventory:      this.inventory,
             resources:      this.resources,
             resourceRate:   this.resourceRate,
@@ -129,8 +152,12 @@ define([
             cash: 0,
             hp: 10,
             cashRate: 0,
-            xp: 0
+            xp: 0,
+            level: 1,
+            toLevel: 45 + (5 * 1)
         };
+        this.level          = data.level;
+        this.toLevel        = data.toLevel;
         this.resourceRate   = data.resourceRate;
         this.inventory      = data.inventory;
         this.resources      = data.resources;
@@ -145,6 +172,7 @@ define([
     Player.prototype.update = function () {
         this.resources += this.resourceRate;
         this.cash += this.cashRate;
+        if (this.xp >= this.toLevel) this.levelUp();
     };
 
     Player.prototype.logSave = function () {

@@ -13,7 +13,8 @@ define([
 
     function Player() {
         this.level = 1;
-        this.toLevel = 45 + (5 * this.level);
+        this.xpModifier = this.getXpModifier();
+        this.toLevel = this.xpModifier + (5 * this.level);
         this.cash = 0;
         this.hp = 10;
         this.xp = 0;
@@ -54,8 +55,23 @@ define([
     Player.prototype.levelUp = function () {
         this.level++;
         this.xp = (this.xp > this.toLevel) ? this.xp - this.toLevel: 0;
-        this.toLevel = 45 + (5 * this.level);
+        this.xpModifier = this.getXpModifier();
+        this.toLevel = this.xpModifier + (5 * this.level);
         return this;
+    };
+
+    Player.prototype.getXpModifier = function () {
+        if (this.level < 10) {
+            return 45;
+        } else if (this.level >= 10 && this.level <= 19) {
+            return 235;
+        } else if (this.level >= 20 && this.level <= 29) {
+            return 580;
+        } else if (this.level >= 30) {
+            return 1878;
+        } else {
+            return 2432;
+        }
     };
 
     Player.prototype.doAdventure = function () {
@@ -70,7 +86,7 @@ define([
             this.modCash(amt);
             this.notifications.log('You found ' + amt + ' cash monies +');
         }
-        var xpGain = Math.ceil(Math.random() * 4);
+        var xpGain = Math.ceil(Math.random() * 20);
         this.notifications.log('You gain ' + xpGain + ' xp +');
         this.xp += xpGain;
     };
@@ -136,7 +152,8 @@ define([
             cash:           this.cash,
             hp:             this.hp,
             cashRate:       this.cashRate,
-            xp:             this.xp
+            xp:             this.xp,
+            xpModifier:     this.xpModifier
         };
         localStorage.setItem(saveName, btoa(JSON.stringify(data)));
     };
@@ -153,6 +170,7 @@ define([
             cashRate: 0,
             xp: 0,
             level: 1,
+            xpModifier: 45,
             toLevel: 45 + (5 * 1)
         };
         this.level          = data.level;
@@ -166,6 +184,7 @@ define([
         this.hp             = data.hp;
         this.cashRate       = data.cashRate;
         this.xp             = data.xp;
+        this.xpModifier     = data.xpModifier;
     };
 
     Player.prototype.update = function () {

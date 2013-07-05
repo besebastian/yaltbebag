@@ -9,7 +9,7 @@ define([
 ) {
     'use strict';
 
-    var saveName = 'webgame-proto';
+    var SAVE_NAME = 'webgame-proto';
 
     function Player() {
         this.level = 1;
@@ -155,11 +155,11 @@ define([
             xp:             this.xp,
             xpModifier:     this.xpModifier
         };
-        localStorage.setItem(saveName, btoa(JSON.stringify(data)));
+        localStorage.setItem(SAVE_NAME, btoa(JSON.stringify(data)));
     };
 
     Player.prototype.load = function () {
-        var data = JSON.parse(atob(localStorage.getItem(saveName))) || {
+        var data = JSON.parse(atob(localStorage.getItem(SAVE_NAME))) || {
             inventory: [],
             resources: 0,
             resourceRate: 0.45,
@@ -194,12 +194,12 @@ define([
     };
 
     Player.prototype.loadLoggedSave = function (saveData) {
-        localStorage.setItem(saveName, saveData);
+        localStorage.setItem(SAVE_NAME, saveData);
         this.load();
     };
 
     Player.prototype.getSavedData = function () {
-        return localStorage.getItem(saveName);
+        return localStorage.getItem(SAVE_NAME);
     };
 
     return Player;

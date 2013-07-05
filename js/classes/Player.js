@@ -139,7 +139,6 @@ define([
             xp:             this.xp
         };
         localStorage.setItem(saveName, btoa(JSON.stringify(data)));
-        this.logSave();
     };
 
     Player.prototype.load = function () {
@@ -175,13 +174,13 @@ define([
         if (this.xp >= this.toLevel) this.levelUp();
     };
 
-    Player.prototype.logSave = function () {
-        console.log('Saved data: ', localStorage.getItem(saveName));
-    };
-
     Player.prototype.loadLoggedSave = function (saveData) {
         localStorage.setItem(saveName, saveData);
         this.load();
+    };
+
+    Player.prototype.getSavedData = function () {
+        return localStorage.getItem(saveName);
     };
 
     return Player;

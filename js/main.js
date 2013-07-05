@@ -45,12 +45,23 @@ require([
             var $buttonSave = $('.button-save');
             var $buttonLoad = $('.button-load');
             var $buttonImport = $('.button-import');
+            var $buttonExport = $('.button-export');
 
             $buttonImport.on('click', function (event) {
                 event.preventDefault();
                 var data = prompt('Paste save data string');
                 if (data !== '') {
                     player.loadLoggedSave(data);
+                }
+            });
+
+            $buttonExport.on('click', function (event) {
+                event.preventDefault();
+                var data = player.getSavedData();
+                if (data !== null) {
+                    prompt('Copy the following', data);
+                } else {
+                    alert('No saved data present');
                 }
             });
 

@@ -1,6 +1,7 @@
 requirejs.config({
     deps: ['main'],
     paths: {
+        // Third-party guff
         jquery:     'vendor/jquery',
 
         // Classes

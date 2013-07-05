@@ -86,7 +86,7 @@ define([
             this.modCash(amt);
             this.notifications.log('You found ' + amt + ' cash monies +');
         }
-        var xpGain = Math.ceil(Math.random() * 20);
+        var xpGain = Math.ceil(Math.random() * 6);
         this.notifications.log('You gain ' + xpGain + ' xp +');
         this.xp += xpGain;
     };

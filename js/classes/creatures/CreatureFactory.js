@@ -1,7 +1,9 @@
 define([
-    'Buttmonster'
+    'Buttmonster',
+    'Testmonster'
 ], function (
-    Buttmonster
+    Buttmonster,
+    Testmonster
 ) {
     'use strict';
 
@@ -10,6 +12,11 @@ define([
     CreatureFactory.prototype.spawnButtmonster = function () {
         var buttmonster = new Buttmonster();
         return buttmonster;
+    };
+
+    CreatureFactory.prototype.spawnTestmonster = function () {
+        var testmonster = new Testmonster();
+        return testmonster;
     };
 
     return CreatureFactory;

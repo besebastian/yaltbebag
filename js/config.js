@@ -9,6 +9,7 @@ requirejs.config({
         Creature:       'classes/creatures/Creature',
         Player:         'classes/creatures/Player',
         Buttmonster:    'classes/creatures/Buttmonster',
+        Testmonster:    'classes/creatures/Testmonster',
         Item:           'classes/Item',
         Notifications:  'classes/utils/Notifications',
 

@@ -34,10 +34,8 @@ define([
     };
 
     Player.prototype.doFight = function () {
-        this.notifications.log('Fighting a Buttmonster! -');
         var other = creatureFactory.spawnButtmonster();
-        var other2 = creatureFactory.spawnTestmonster();
-        console.log(other, other2);
+        this.notifications.log('A wild ' + other.name + ' appears! -');
     };
 
     Player.prototype.doAdventure = function () {

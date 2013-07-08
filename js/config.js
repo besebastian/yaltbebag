@@ -5,22 +5,16 @@ requirejs.config({
         jquery:     'vendor/jquery',
 
         // Classes
-        Player:         'classes/Player',
+        CreatureFactory:'classes/creatures/CreatureFactory',
+        Creature:       'classes/creatures/Creature',
+        Player:         'classes/creatures/Player',
+        Buttmonster:    'classes/creatures/Buttmonster',
         Item:           'classes/Item',
-        Notifications:  'classes/Notifications',
+        Notifications:  'classes/utils/Notifications',
 
         // Enumerators
         ItemTypes:      'enum/ItemTypes',
         ArmourSlots:    'enum/ArmourSlots',
         WeaponSlots:    'enum/WeaponSlots'
-    },
-    shims: {
-        jquery: {
-            exports: 'jQuery'
-        },
-        Player: {
-            deps: ['jquery'],
-            exports: 'Player'
-        }
     }
 });

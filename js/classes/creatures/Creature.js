@@ -11,7 +11,8 @@ define([
 
     var SAVE_NAME = 'webgame-proto';
 
-    function Player() {
+    function Creature(name) {
+        this.name = name;
         this.level = 1;
         this.xpModifier = this.getXpModifier();
         this.toLevel = this.xpModifier + (5 * this.level);
@@ -35,24 +36,19 @@ define([
         this.notifications = new Notifications();
     }
 
-    Player.prototype.action = function (type) {
-        switch (type) {
-            case 'adventure':
-                this.doAdventure();
-                break;
-        }
-        return this;
-    };
+    Creature.prototype.getName = function () {
+        return this.name;
+    }
 
-    Player.prototype.getLevel = function () {
+    Creature.prototype.getLevel = function () {
         return this.level;
     };
 
-    Player.prototype.getToLevel = function () {
+    Creature.prototype.getToLevel = function () {
         return this.toLevel;
     }
 
-    Player.prototype.levelUp = function () {
+    Creature.prototype.levelUp = function () {
         this.level++;
         this.xp = (this.xp > this.toLevel) ? this.xp - this.toLevel: 0;
         this.xpModifier = this.getXpModifier();
@@ -60,7 +56,7 @@ define([
         return this;
     };
 
-    Player.prototype.getXpModifier = function () {
+    Creature.prototype.getXpModifier = function () {
         if (this.level < 10) {
             return 45;
         } else if (this.level >= 10 && this.level <= 19) {
@@ -74,74 +70,58 @@ define([
         }
     };
 
-    Player.prototype.doAdventure = function () {
-        if (Math.floor(Math.random() * 10) % 3 === 0) {
-            var name = "Random Item";
-            var type = Math.floor(Math.random() * (Object.keys(ItemTypes).length - 2));
-            this.addInventoryItem(new Item(name, type));
-            this.notifications.log('' + name + ' found +');
-        }
-        if (Math.floor(Math.random() * 10) % 2 === 0) {
-            var amt = Math.ceil(Math.random() * 10);
-            this.modCash(amt);
-            this.notifications.log('You found ' + amt + ' cash monies +');
-        }
-        var xpGain = Math.ceil(Math.random() * 6);
-        this.notifications.log('You gain ' + xpGain + ' xp +');
-        this.xp += xpGain;
-    };
-
-    Player.prototype.setResourceRate = function (value) {
+    Creature.prototype.setResourceRate = function (value) {
         this.resourceRate = value;
     };
 
-    Player.prototype.modResources = function (amount) {
+    Creature.prototype.modResources = function (amount) {
         this.resources += amount;
         return this;
     };
 
-    Player.prototype.getResources = function () {
+    Creature.prototype.getResources = function () {
         return Math.floor(this.resources);
     };
 
-    Player.prototype.getXp = function () {
+    Creature.prototype.getXp = function () {
         return this.xp;
     };
 
-    Player.prototype.modXp = function (amount) {
+    Creature.prototype.modXp = function (amount) {
         this.xp += amount;
         return this;
     };
 
-    Player.prototype.getHp = function () {
+    Creature.prototype.getHp = function () {
         return this.hp;
     };
 
-    Player.prototype.modHp = function (amount) {
+    Creature.prototype.modHp = function (amount) {
         this.hp += amount;
         return this;
     };
 
-    Player.prototype.getCash = function () {
+    Creature.prototype.getCash = function () {
         return this.cash;
     }
 
-    Player.prototype.modCash = function (amount) {
+    Creature.prototype.modCash = function (amount) {
         this.cash += amount;
         return this;
     };
 
-    Player.prototype.addInventoryItem = function (item) {
+    Creature.prototype.addInventoryItem = function (item) {
         this.inventory.push(item);
         return this;
     };
 
-    Player.prototype.getInventory = function () {
+    Creature.prototype.getInventory = function () {
         return this.inventory;
     };
 
-    Player.prototype.save = function () {
+    Creature.prototype.save = function () {
         var data = {
+            name:           this.name,
             level:          this.level,
             toLevel:        this.toLevel,
             inventory:      this.inventory,
@@ -158,21 +138,9 @@ define([
         localStorage.setItem(SAVE_NAME, btoa(JSON.stringify(data)));
     };
 
-    Player.prototype.load = function () {
-        var data = JSON.parse(atob(localStorage.getItem(SAVE_NAME))) || {
-            inventory: [],
-            resources: 0,
-            resourceRate: 0.45,
-            armour: {},
-            weapon: {},
-            cash: 0,
-            hp: 10,
-            cashRate: 0,
-            xp: 0,
-            level: 1,
-            xpModifier: 45,
-            toLevel: 45 + (5 * 1)
-        };
+    Creature.prototype.load = function () {
+        var data = JSON.parse(atob(localStorage.getItem(SAVE_NAME)));
+        this.name           = data.name;
         this.level          = data.level;
         this.toLevel        = data.toLevel;
         this.resourceRate   = data.resourceRate;
@@ -187,20 +155,30 @@ define([
         this.xpModifier     = data.xpModifier;
     };
 
-    Player.prototype.update = function () {
+    Creature.prototype.update = function () {
         this.resources += this.resourceRate;
         this.cash += this.cashRate;
         if (this.xp >= this.toLevel) this.levelUp();
     };
 
-    Player.prototype.loadLoggedSave = function (saveData) {
+    Creature.prototype.loadLoggedSave = function (saveData) {
         localStorage.setItem(SAVE_NAME, saveData);
         this.load();
     };
 
-    Player.prototype.getSavedData = function () {
+    Creature.prototype.getSavedData = function () {
         return localStorage.getItem(SAVE_NAME);
     };
 
-    return Player;
+    Creature.prototype.firstSave = function () {
+        if (localStorage.getItem(SAVE_NAME) === null) this.save();
+    };
+
+    Creature.prototype.kill = function () {
+        this = null;
+        delete this;
+    };
+
+    return Creature;
 });
+

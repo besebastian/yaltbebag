@@ -1,12 +1,14 @@
 require([
     'jquery',
     'Player',
+    'Buttmonster',
     'Item',
     'ItemTypes',
     'Notifications'
 ], function (
     $,
     Player,
+    Buttmonster,
     Item,
     ItemTypes,
     Notifications
@@ -25,7 +27,7 @@ require([
         var $actions;
 
         function init() {
-            player          = new Player();
+            player          = new Player('Geoff');
             notifications   = new Notifications();
 
             autoSaveTimer = 0;
@@ -37,6 +39,7 @@ require([
 
             uiHandlers();
 
+            player.firstSave();
             setInterval(loop, 1000);
             loop();
         }
@@ -129,6 +132,7 @@ require([
 
         function renderPlayer() {
             $player.html('');
+            $player.append('<li>Name: ' + player.getName() + '</li>');
             $player.append('<li>Level: ' + player.getLevel() + '</li>');
             $player.append('<li>HP: ' + player.getHp() + '</li>');
             $player.append('<li>XP: ' + player.getXp() + '/' + player.getToLevel() + '</li>');
@@ -138,6 +142,7 @@ require([
         function renderActions() {
             $actions.html('');
             $actions.append('<li><a href="#" class="action" data-action="adventure">Adventure!</a></li>');
+            $actions.append('<li><a href="#" class="action" data-action="fight">Fight!</a></li>');
             adventureHandlers();
         }
 

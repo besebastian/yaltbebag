@@ -11,7 +11,7 @@ define([
 
     function Item(name, type) {
         this.name = name || 'HERP DERP NO NAME';
-        this.type = type || -1;
+        this.type = type || ItemTypes.UNKNOWN;
         this.power = 0;
         this.defense = 0;
         this.nutrition = 0;

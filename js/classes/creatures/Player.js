@@ -35,23 +35,23 @@ define([
 
     Player.prototype.doFight = function () {
         var other = creatureFactory.spawnButtmonster();
-        this.notifications.log('A wild ' + other.name + ' appears! -');
+        this.notifications.log('A wild ' + other.name + ' appears! [!]');
     };
 
     Player.prototype.doAdventure = function () {
         if (Math.floor(Math.random() * 10) % 3 === 0) {
-            var name = "Random Item";
+            var name = 'Random Item';
             var type = Math.floor(Math.random() * (Object.keys(ItemTypes).length - 2));
             this.addInventoryItem(new Item(name, type));
-            this.notifications.log('' + name + ' found +');
+            this.notifications.log('' + name + ' found [+]');
         }
         if (Math.floor(Math.random() * 10) % 2 === 0) {
             var amt = Math.ceil(Math.random() * 10);
             this.modCash(amt);
-            this.notifications.log('You found ' + amt + ' cash monies +');
+            this.notifications.log('You found ' + amt + ' cash monies [+]');
         }
         var xpGain = Math.ceil(Math.random() * 6);
-        this.notifications.log('You gain ' + xpGain + ' xp +');
+        this.notifications.log('You gain ' + xpGain + ' xp [+]');
         this.xp += xpGain;
     };
 

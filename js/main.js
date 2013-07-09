@@ -1,12 +1,10 @@
 require([
-    'jquery',
     'Player',
     'Buttmonster',
     'Item',
     'ItemTypes',
     'Notifications'
 ], function (
-    $,
     Player,
     Buttmonster,
     Item,
@@ -32,10 +30,10 @@ require([
 
             autoSaveTimer = 0;
 
-            $player     = $('#player');
-            $resources  = $('#resources');
-            $inventory  = $('#inventory');
-            $actions    = $('#actions');
+            $player     = document.getElementById('player');
+            $resources  = document.getElementById('resources');
+            $inventory  = document.getElementById('inventory');
+            $actions    = document.getElementById('actions');
 
             uiHandlers();
 
@@ -45,12 +43,12 @@ require([
         }
 
         function uiHandlers() {
-            var $buttonSave = $('.button-save');
-            var $buttonLoad = $('.button-load');
-            var $buttonImport = $('.button-import');
-            var $buttonExport = $('.button-export');
+            var $buttonSave = document.getElementsByClassName('button-save')[0];
+            var $buttonLoad = document.getElementsByClassName('button-load')[0];
+            var $buttonImport = document.getElementsByClassName('button-import')[0];
+            var $buttonExport = document.getElementsByClassName('button-export')[0];
 
-            $buttonImport.on('click', function (event) {
+            $buttonImport.click(function (event) {
                 event.preventDefault();
                 var data = prompt('Paste save data string');
                 if (data !== '') {
@@ -58,7 +56,7 @@ require([
                 }
             });
 
-            $buttonExport.on('click', function (event) {
+            $buttonExport.click(function (event) {
                 event.preventDefault();
                 var data = player.getSavedData();
                 if (data !== null) {
@@ -68,14 +66,14 @@ require([
                 }
             });
 
-            $buttonSave.on('click', function (event) {
+            $buttonSave.click(function (event) {
                 event.preventDefault();
                 autoSaveTimer = 0;
                 player.save();
                 notifications.log('Game saved');
             });
 
-            $buttonLoad.on('click', function (event) {
+            $buttonLoad.click(function (event) {
                 event.preventDefault();
                 autoSaveTimer = 0;
                 player.load();
@@ -85,12 +83,13 @@ require([
         }
 
         function adventureHandlers() {
-            var $actionButtons = $('.action');
-            $.each($actionButtons, function () {
-                $(this).on('click', function (event) {
+            var $actionButtons = Array.prototype.slice.call(document.getElementsByClassName('action'));
+            $actionButtons.forEach(function (action) {
+                action.removeEventListener('click');
+                action.addEventListener('click', function (event) {
                     event.preventDefault();
-                    var action = $(this).data('action');
-                    player.action(action);
+                    var actionName = action.getAttribute('data-action');
+                    player.action(actionName);
                 });
             });
         }
@@ -118,31 +117,31 @@ require([
         }
 
         function renderResources() {
-            $resources.html('');
-            $resources.append('<li>Maguffinite ore: ' + player.getResources() + '</li>');
+            $resources.innerHTML = '';
+            $resources.innerHTML += '<li>Maguffinite ore: ' + player.getResources() + '</li>';
         }
 
         function renderInventory() {
             var items = player.getInventory();
-            $inventory.html('');
+            $inventory.innerHTML = '';
             items.forEach(function (item) {
-                $inventory.append('<li>' + item.name + '</li>');
+                $inventory.innerHTML += '<li>' + item.name + '</li>';
             });
         }
 
         function renderPlayer() {
-            $player.html('');
-            $player.append('<li>Name: ' + player.getName() + '</li>');
-            $player.append('<li>Level: ' + player.getLevel() + '</li>');
-            $player.append('<li>HP: ' + player.getHp() + '</li>');
-            $player.append('<li>XP: ' + player.getXp() + '/' + player.getToLevel() + '</li>');
-            $player.append('<li>Cash: ' + player.getCash() + '</li>');
+            $player.innerHTML = '';
+            $player.innerHTML += '<li>Name: ' + player.getName() + '</li>';
+            $player.innerHTML += '<li>Level: ' + player.getLevel() + '</li>';
+            $player.innerHTML += '<li>HP: ' + player.getHp() + '</li>';
+            $player.innerHTML += '<li>XP: ' + player.getXp() + '/' + player.getToLevel() + '</li>';
+            $player.innerHTML += '<li>Cash: ' + player.getCash() + '</li>';
         }
 
         function renderActions() {
-            $actions.html('');
-            $actions.append('<li><a href="#" class="action" data-action="adventure">Adventure!</a></li>');
-            $actions.append('<li><a href="#" class="action" data-action="fight">Fight!</a></li>');
+            $actions.innerHTML = '';
+            $actions.innerHTML += '<li><a href="#" class="action" data-action="adventure">Adventure!</a></li>';
+            $actions.innerHTML += '<li><a href="#" class="action" data-action="fight">Fight!</a></li>';
             adventureHandlers();
         }
 

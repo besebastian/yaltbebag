@@ -1,9 +1,6 @@
 requirejs.config({
     deps: ['main'],
     paths: {
-        // Third-party guff
-        jquery:     'vendor/jquery',
-
         // Classes
         CreatureFactory:'classes/creatures/CreatureFactory',
         Creature:       'classes/creatures/Creature',

@@ -42,6 +42,7 @@ require([
             player.firstSave();
             setInterval(loop, 1000);
             loop();
+            renderActions();
         }
 
         function uiHandlers() {
@@ -92,6 +93,7 @@ require([
                     event.preventDefault();
                     var actionName = action.getAttribute('data-action');
                     player.action(actionName);
+                    new Cooldown(action, 10000);
                 });
             });
         }
@@ -115,7 +117,6 @@ require([
             renderResources();
             renderInventory();
             renderPlayer();
-            renderActions();
         }
 
         function renderResources() {

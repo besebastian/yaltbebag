@@ -93,7 +93,10 @@ require([
                     event.preventDefault();
                     var actionName = action.getAttribute('data-action');
                     player.action(actionName);
-                    new Cooldown(action, 10000);
+                    $actionButtons.forEach(function (a) {
+                        var cooldown = a.getAttribute('data-cooldown');
+                        new Cooldown(a, cooldown);
+                    });
                 });
             });
         }
@@ -143,8 +146,8 @@ require([
 
         function renderActions() {
             $actions.innerHTML = '';
-            $actions.innerHTML += '<li><a href="#" class="action" data-action="adventure">Adventure!</a></li>';
-            $actions.innerHTML += '<li><a href="#" class="action" data-action="fight">Fight!</a></li>';
+            $actions.innerHTML += '<li><a href="#" class="action" data-action="adventure" data-cooldown="15000">Adventure!</a></li>';
+            $actions.innerHTML += '<li><a href="#" class="action" data-action="fight" data-cooldown="10000">Fight!</a></li>';
             adventureHandlers();
         }
 

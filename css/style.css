@@ -35,3 +35,14 @@
     font-family: monospace;
     overflow: hidden;
 }
+
+#log i {
+    font-family: 'FontAwesome';
+}
+
+[disabled] {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+    background: transparent url(../img/waiting.gif) center center no-repeat;
+}

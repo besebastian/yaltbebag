@@ -9,6 +9,7 @@ requirejs.config({
         Testmonster:    'classes/creatures/Testmonster',
         Item:           'classes/Item',
         Notifications:  'classes/utils/Notifications',
+        Cooldown:       'classes/utils/Cooldown',
 
         // Enumerators
         ItemTypes:      'enum/ItemTypes',

@@ -34,7 +34,27 @@ define([
         this.weapon.left = null;
         this.weapon.right = null;
         this.notifications = new Notifications();
+        this.defense = 0;
+        this.attack = 0;
     }
+
+    Creature.prototype.getDefense = function () {
+        return this.defense;
+    };
+
+    Creature.prototype.modDefense = function (amount) {
+        this.defense += amount;
+        return this;
+    };
+
+    Creature.prototype.getAttack = function () {
+        return this.attack;
+    };
+
+    Creature.prototype.modAttack = function (amount) {
+        this.attack += amount;
+        return this;
+    };
 
     Creature.prototype.getName = function () {
         return this.name;
@@ -120,22 +140,7 @@ define([
     };
 
     Creature.prototype.save = function () {
-        var data = {
-            name:           this.name,
-            level:          this.level,
-            toLevel:        this.toLevel,
-            inventory:      this.inventory,
-            resources:      this.resources,
-            resourceRate:   this.resourceRate,
-            armour:         this.armour,
-            weapon:         this.weapon,
-            cash:           this.cash,
-            hp:             this.hp,
-            cashRate:       this.cashRate,
-            xp:             this.xp,
-            xpModifier:     this.xpModifier
-        };
-        localStorage.setItem(SAVE_NAME, btoa(JSON.stringify(data)));
+        localStorage.setItem(SAVE_NAME, btoa(JSON.stringify(this)));
     };
 
     Creature.prototype.load = function () {
@@ -153,6 +158,8 @@ define([
         this.cashRate       = data.cashRate;
         this.xp             = data.xp;
         this.xpModifier     = data.xpModifier;
+        this.attack         = data.attack;
+        this.defense        = data.defense;
     };
 
     Creature.prototype.update = function () {
@@ -172,11 +179,6 @@ define([
 
     Creature.prototype.firstSave = function () {
         if (localStorage.getItem(SAVE_NAME) === null) this.save();
-    };
-
-    Creature.prototype.kill = function () {
-        this = null;
-        delete this;
     };
 
     return Creature;

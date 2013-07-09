@@ -16,6 +16,7 @@ define([
 
     CreatureFactory.prototype.spawnTestmonster = function () {
         var testmonster = new Testmonster();
+        testmonster.modAttack(1).modDefense(1).modHp(5);
         return testmonster;
     };
 

@@ -7,7 +7,6 @@ define([
 
     function Testmonster() {
         Creature.call(this, "Testmonster");
-        this.hp = 100;
     }
 
     Testmonster.prototype = new Creature();

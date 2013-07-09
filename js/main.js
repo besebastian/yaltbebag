@@ -3,13 +3,15 @@ require([
     'Buttmonster',
     'Item',
     'ItemTypes',
-    'Notifications'
+    'Notifications',
+    'Cooldown'
 ], function (
     Player,
     Buttmonster,
     Item,
     ItemTypes,
-    Notifications
+    Notifications,
+    Cooldown
 ) {
     'use strict';
     (function () {
@@ -48,7 +50,7 @@ require([
             var $buttonImport = document.getElementsByClassName('button-import')[0];
             var $buttonExport = document.getElementsByClassName('button-export')[0];
 
-            $buttonImport.click(function (event) {
+            $buttonImport.addEventListener('click', function (event) {
                 event.preventDefault();
                 var data = prompt('Paste save data string');
                 if (data !== '') {
@@ -56,7 +58,7 @@ require([
                 }
             });
 
-            $buttonExport.click(function (event) {
+            $buttonExport.addEventListener('click', function (event) {
                 event.preventDefault();
                 var data = player.getSavedData();
                 if (data !== null) {
@@ -66,19 +68,19 @@ require([
                 }
             });
 
-            $buttonSave.click(function (event) {
+            $buttonSave.addEventListener('click', function (event) {
                 event.preventDefault();
                 autoSaveTimer = 0;
                 player.save();
-                notifications.log('Game saved');
+                notifications.log('Game saved', 'save');
             });
 
-            $buttonLoad.click(function (event) {
+            $buttonLoad.addEventListener('click', function (event) {
                 event.preventDefault();
                 autoSaveTimer = 0;
                 player.load();
                 render();
-                notifications.log('Game loaded');
+                notifications.log('Game loaded', 'upload-alt');
             });
         }
 

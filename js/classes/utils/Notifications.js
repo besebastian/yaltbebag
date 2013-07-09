@@ -6,9 +6,9 @@ define(function () {
         alert(message);
     };
 
-    Notifications.prototype.log = function (message) {
+    Notifications.prototype.log = function (message, icon) {
         var log = document.getElementById('log');
-        log.innerHTML = message + '\n' + log.innerHTML;
+        log.innerHTML = '<li>' + message + ' <i class="icon-' + icon + '"> </i></li>' + log.innerHTML;
     };
 
     return Notifications;

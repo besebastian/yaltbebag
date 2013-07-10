@@ -7,12 +7,14 @@ requirejs.config({
         Player:         'classes/creatures/Player',
         Buttmonster:    'classes/creatures/Buttmonster',
         Testmonster:    'classes/creatures/Testmonster',
-        Item:           'classes/Item',
+        Item:           'classes/items/Item',
+        ItemFactory:    'classes/items/ItemFactory',
         Notifications:  'classes/utils/Notifications',
         Cooldown:       'classes/utils/Cooldown',
 
         // Enumerators
         ItemTypes:      'enum/ItemTypes',
+        ItemSuffix:     'enum/ItemSuffix',
         ArmourSlots:    'enum/ArmourSlots',
         WeaponSlots:    'enum/WeaponSlots'
     }

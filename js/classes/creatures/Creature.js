@@ -149,7 +149,7 @@ define([
         this.level          = data.level;
         this.toLevel        = data.toLevel;
         this.resourceRate   = data.resourceRate;
-        this.inventory      = data.inventory;
+        this.inventory      = this.parseInventory(data.inventory);
         this.resources      = data.resources;
         this.armour         = data.armour;
         this.weapon         = data.weapon;
@@ -160,6 +160,18 @@ define([
         this.xpModifier     = data.xpModifier;
         this.attack         = data.attack;
         this.defense        = data.defense;
+    };
+
+    Creature.prototype.parseInventory = function (inv) {
+        var inventory = [];
+        inv.forEach(function (item) {
+            var i = new Item(item.name, item.type);
+            i.modDefense(item.defense)
+             .modPower(item.power)
+             .modNutrition(item.nutrition);
+            inventory.push(i);
+        });
+        return inventory;
     };
 
     Creature.prototype.update = function () {

@@ -1,15 +1,9 @@
 require([
     'Player',
-    'Buttmonster',
-    'Item',
-    'ItemTypes',
     'Notifications',
     'Cooldown'
 ], function (
     Player,
-    Buttmonster,
-    Item,
-    ItemTypes,
     Notifications,
     Cooldown
 ) {
@@ -131,7 +125,7 @@ require([
             var items = player.getInventory();
             $inventory.innerHTML = '';
             items.forEach(function (item) {
-                $inventory.innerHTML += '<li>' + item.name + '</li>';
+                $inventory.innerHTML += '<li data-type="' + item.getType() + '">' + item.getName() + '</li>';
             });
         }
 

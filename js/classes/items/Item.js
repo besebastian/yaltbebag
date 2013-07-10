@@ -32,5 +32,13 @@ define([
         return this;
     };
 
+    Item.prototype.getName = function () {
+        return this.name;
+    };
+
+    Item.prototype.getType = function () {
+        return this.type;
+    };
+
     return Item;
 });

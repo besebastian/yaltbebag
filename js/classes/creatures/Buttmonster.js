@@ -6,7 +6,7 @@ define([
     'use strict';
 
     function Buttmonster() {
-        Creature.call(this, "Buttmonster");
+        Creature.call(this, 'Buttmonster');
         this.hp = 100;
     }
 

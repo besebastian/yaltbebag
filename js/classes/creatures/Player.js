@@ -23,12 +23,12 @@ define([
 
     Player.prototype.action = function (type) {
         switch (type) {
-            case 'adventure':
-                this.actionAdventure();
-                break;
-            case 'fight':
-                this.actionFight();
-                break;
+        case 'adventure':
+            this.actionAdventure();
+            break;
+        case 'fight':
+            this.actionFight();
+            break;
         }
         return this;
     };

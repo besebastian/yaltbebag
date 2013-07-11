@@ -6,7 +6,7 @@ define([
     'use strict';
 
     function Testmonster() {
-        Creature.call(this, "Testmonster");
+        Creature.call(this, 'Testmonster');
     }
 
     Testmonster.prototype = new Creature();

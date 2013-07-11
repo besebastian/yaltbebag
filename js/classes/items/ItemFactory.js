@@ -10,11 +10,11 @@ define([
     'use strict';
 
     function ItemFactory() {
-    
+
     }
 
     ItemFactory.prototype.randomItem = function () {
-        return new Item("rand", ItemTypes.FOOD);
+        return new Item('rand', ItemTypes.FOOD);
     };
 
     return ItemFactory;

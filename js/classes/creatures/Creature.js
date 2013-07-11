@@ -58,7 +58,7 @@ define([
 
     Creature.prototype.getName = function () {
         return this.name;
-    }
+    };
 
     Creature.prototype.getLevel = function () {
         return this.level;
@@ -66,7 +66,7 @@ define([
 
     Creature.prototype.getToLevel = function () {
         return this.toLevel;
-    }
+    };
 
     Creature.prototype.levelUp = function () {
         this.level++;
@@ -123,7 +123,7 @@ define([
 
     Creature.prototype.getCash = function () {
         return this.cash;
-    }
+    };
 
     Creature.prototype.modCash = function (amount) {
         this.cash += amount;
@@ -177,7 +177,9 @@ define([
     Creature.prototype.update = function () {
         this.resources += this.resourceRate;
         this.cash += this.cashRate;
-        if (this.xp >= this.toLevel) this.levelUp();
+        if (this.xp >= this.toLevel) {
+            this.levelUp();
+        }
     };
 
     Creature.prototype.loadLoggedSave = function (saveData) {
@@ -190,7 +192,9 @@ define([
     };
 
     Creature.prototype.firstSave = function () {
-        if (localStorage.getItem(SAVE_NAME) === null) this.save();
+        if (localStorage.getItem(SAVE_NAME) === null) {
+            this.save();
+        }
     };
 
     return Creature;

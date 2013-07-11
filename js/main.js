@@ -140,8 +140,8 @@ require([
 
         function renderActions() {
             $actions.innerHTML = '';
-            $actions.innerHTML += '<li><a href="#" class="action" data-action="adventure" data-cooldown="15000">Adventure!</a></li>';
-            $actions.innerHTML += '<li><a href="#" class="action" data-action="fight" data-cooldown="10000">Fight!</a></li>';
+            $actions.innerHTML += '<li><a href="#" class="action" data-action="adventure" data-cooldown="15">Adventure!</a></li>';
+            $actions.innerHTML += '<li><a href="#" class="action" data-action="fight" data-cooldown="10">Fight!</a></li>';
             adventureHandlers();
         }
 

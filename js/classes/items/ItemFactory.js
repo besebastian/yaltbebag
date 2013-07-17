@@ -1,11 +1,9 @@
 define([
     'Item',
-    'ItemTypes',
-    'ItemSuffix'
+    'ItemTypes'
 ], function (
     Item,
-    ItemTypes,
-    ItemSuffix
+    ItemTypes
 ) {
     'use strict';
 
@@ -14,7 +12,7 @@ define([
     }
 
     ItemFactory.prototype.randomItem = function () {
-        return new Item('rand', Math.floor(Math.random() * 4));
+        return new Item('Random', ItemTypes[Math.floor(Math.random() * ItemTypes.length)]);
     };
 
     return ItemFactory;

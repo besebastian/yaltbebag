@@ -83,22 +83,6 @@ require([
             });
         }
 
-        function adventureHandlers() {
-            var $actionButtons = Array.prototype.slice.call(document.getElementsByClassName('action'));
-            $actionButtons.forEach(function (action) {
-                action.removeEventListener('click');
-                action.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    var actionName = action.getAttribute('data-action');
-                    player.action(actionName);
-                    $actionButtons.forEach(function (a) {
-                        var cooldown = a.getAttribute('data-cooldown');
-                        new Cooldown(a, cooldown);
-                    });
-                });
-            });
-        }
-
         function loop() {
             autoSaveTimer++;
             if (autoSaveTimer === 100) {

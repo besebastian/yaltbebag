@@ -12,11 +12,9 @@ requirejs.config({
         ItemFactory:        'classes/items/ItemFactory',
         Notifications:      'classes/utils/Notifications',
         Cooldown:           'classes/utils/Cooldown',
+        Common:             'classes/utils/Common',
 
         // Enumerators
-        ItemTypes:          'enum/ItemTypes',
-        ItemSuffix:         'enum/ItemSuffix',
-        ArmourSlots:        'enum/ArmourSlots',
-        WeaponSlots:        'enum/WeaponSlots'
+        ItemTypes:          'enum/ItemTypes'
     }
 });

@@ -1,11 +1,7 @@
 define([
-    'ItemTypes',
-    'ArmourSlots',
-    'WeaponSlots'
+    'ItemTypes'
 ], function (
-    ItemTypes,
-    ArmourSlots,
-    WeaponSlots
+    ItemTypes
 ) {
     'use strict';
 

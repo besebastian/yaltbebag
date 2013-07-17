@@ -19,6 +19,8 @@ define([
     Renderer.prototype.clear = function () {
         canvas.width = canvas.width;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.rect(0, 0, canvas.width, canvas.height);
+        ctx.fill();
     };
 
     Renderer.prototype.listeners = function (player) {
@@ -41,18 +43,28 @@ define([
         var y = 10;
         hotspots = [];
         actions.forEach(function (action) {
+            ctx.beginPath();
             ctx.rect(10, y, 200, 30);
-            ctx.fillText(action, 20, y + 20);
+            ctx.fillStyle = '#000000';
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
             ctx.stroke();
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(action, 20, y + 20);
             hotspots.push({ name: action, x: 10, y: y, width: 200, height: 30, hover: false, cooldown: false });
             y += 40;
         });
     };
 
     Renderer.prototype.drawInventory = function (player) {
+        ctx.beginPath();
         ctx.rect(canvas.width - 200, 210, 190, 190);
+        ctx.fillStyle = '#000000';
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
         ctx.stroke();
         ctx.font = bigFont;
+        ctx.fillStyle = '#ffffff';
         ctx.fillText('Inventory', canvas.width - 190, 230);
         ctx.font = defaultFont;
         var items = player.getInventory().slice(0).reverse();
@@ -66,13 +78,16 @@ define([
     };
 
     Renderer.prototype.drawPlayer = function (player) {
+        ctx.beginPath();
         ctx.rect(canvas.width - 200, 10, 190, 190);
-        ctx.stokeStyle = '#000';
+        ctx.fillStyle = '#000000';
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
         ctx.stroke();
         ctx.font = bigFont;
+        ctx.fillStyle = '#ffffff';
         ctx.fillText(player.getName(), canvas.width - 190, 30);
         ctx.font = defaultFont;
-        ctx.textAlign = 'left';
         ctx.fillText('Res: ' + player.getResources(), canvas.width - 190, 60);
         ctx.fillText('Level: ' + player.getLevel(), canvas.width - 190, 80);
         ctx.fillText('HP: ' + player.getHp(), canvas.width - 190, 100);

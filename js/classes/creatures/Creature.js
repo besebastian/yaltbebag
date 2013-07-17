@@ -36,7 +36,12 @@ define([
         this.notifications = new Notifications();
         this.defense = 0;
         this.attack = 0;
+        this.availableActions = ['adventure', 'fight'];
     }
+
+    Creature.prototype.getAvailableActions = function () {
+        return this.availableActions;
+    };
 
     Creature.prototype.getDefense = function () {
         return this.defense;
@@ -160,6 +165,7 @@ define([
         this.xpModifier     = data.xpModifier;
         this.attack         = data.attack;
         this.defense        = data.defense;
+        this.availableActions = data.availableActions;
     };
 
     Creature.prototype.parseInventory = function (inv) {

@@ -46,3 +46,8 @@
     background: transparent url(../img/waiting.gif) center center no-repeat;
     color: rgba(255, 255, 255, 0.3);
 }
+
+#viewport {
+    margin: 0 auto;
+    display: block;
+}

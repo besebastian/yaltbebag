@@ -14,7 +14,7 @@ define([
     }
 
     ItemFactory.prototype.randomItem = function () {
-        return new Item('rand', ItemTypes.FOOD);
+        return new Item('rand', Math.floor(Math.random() * 4));
     };
 
     return ItemFactory;

@@ -2,6 +2,7 @@ requirejs.config({
     deps: ['main'],
     paths: {
         // Classes
+        Renderer:           'classes/core/Renderer',
         CreatureFactory:    'classes/creatures/CreatureFactory',
         Creature:           'classes/creatures/Creature',
         Player:             'classes/creatures/Player',

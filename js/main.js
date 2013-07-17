@@ -1,8 +1,10 @@
 require([
+    'Renderer',
     'Player',
     'Notifications',
     'Cooldown'
 ], function (
+    Renderer,
     Player,
     Notifications,
     Cooldown
@@ -12,6 +14,7 @@ require([
 
         var player;
         var notifications;
+        var renderer;
 
         var autoSaveTimer;
 
@@ -23,6 +26,7 @@ require([
         function init() {
             player          = new Player('Geoff');
             notifications   = new Notifications();
+            renderer        = new Renderer();
 
             autoSaveTimer = 0;
 
@@ -36,7 +40,7 @@ require([
             player.firstSave();
             setInterval(loop, 1000);
             loop();
-            renderActions();
+            renderer.listeners(player);
         }
 
         function uiHandlers() {
@@ -111,38 +115,10 @@ require([
         }
 
         function render() {
-            renderResources();
-            renderInventory();
-            renderPlayer();
-        }
-
-        function renderResources() {
-            $resources.innerHTML = '';
-            $resources.innerHTML += '<li>Maguffinite ore: ' + player.getResources() + '</li>';
-        }
-
-        function renderInventory() {
-            var items = player.getInventory();
-            $inventory.innerHTML = '';
-            items.forEach(function (item) {
-                $inventory.innerHTML += '<li data-type="' + item.getType() + '">' + item.getName() + '</li>';
-            });
-        }
-
-        function renderPlayer() {
-            $player.innerHTML = '';
-            $player.innerHTML += '<li>Name: ' + player.getName() + '</li>';
-            $player.innerHTML += '<li>Level: ' + player.getLevel() + '</li>';
-            $player.innerHTML += '<li>HP: ' + player.getHp() + '</li>';
-            $player.innerHTML += '<li>XP: ' + player.getXp() + '/' + player.getToLevel() + '</li>';
-            $player.innerHTML += '<li>Cash: ' + player.getCash() + '</li>';
-        }
-
-        function renderActions() {
-            $actions.innerHTML = '';
-            $actions.innerHTML += '<li><a href="#" class="action" data-action="adventure" data-cooldown="15">Adventure!</a></li>';
-            $actions.innerHTML += '<li><a href="#" class="action" data-action="fight" data-cooldown="10">Fight!</a></li>';
-            adventureHandlers();
+            renderer.clear();
+            renderer.drawInventory(player);
+            renderer.drawPlayer(player);
+            renderer.drawActions(player);
         }
 
         init();

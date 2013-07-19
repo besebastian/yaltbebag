@@ -15,6 +15,7 @@ define([
     function Player(name) {
         Creature.call(this, name);
         this.modAttack(100).modDefense(100);
+        this.firstSave();
     }
 
     Player.prototype = new Creature();

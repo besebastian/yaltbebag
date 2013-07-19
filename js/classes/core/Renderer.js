@@ -30,8 +30,13 @@ define([
         ctx.fill();
     };
 
+    Renderer.prototype.draw = function (player) {
+        this.drawActions(player);
+        this.drawPlayer(player);
+    };
+
     Renderer.prototype.listeners = function (player) {
-        canvas.removeEventListener('click', clickListener, false);
+        canvas.removeEventListener('click', clickListener);
         canvas.addEventListener('click', clickListener, false);
 
         function clickListener(event) {

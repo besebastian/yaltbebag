@@ -1,7 +1,11 @@
 define([
-    'Common'
+    'Common',
+    'MainScreen',
+    'InventoryScreen'
 ], function (
-    Common
+    Common,
+    MainScreen,
+    InventoryScreen
 ) {
     'use strict';
 
@@ -11,9 +15,12 @@ define([
     var ctx = canvas.getContext('2d');
     var hotspots = [];
     var mouse;
+    var inSubScreen = false;
+    var screen;
 
     function Renderer() {
         this.clear();
+        screen = new MainScreen();
     }
 
     Renderer.prototype.clear = function () {
@@ -24,7 +31,7 @@ define([
     };
 
     Renderer.prototype.listeners = function (player) {
-        canvas.removeEventListener('click', clickListener);
+        canvas.removeEventListener('click', clickListener, false);
         canvas.addEventListener('click', clickListener, false);
 
         function clickListener(event) {
@@ -44,16 +51,20 @@ define([
         hotspots = [];
         actions.forEach(function (action) {
             ctx.beginPath();
-            ctx.rect(10, y, 200, 30);
+            ctx.rect(10, y, 150, 30);
             ctx.fillStyle = '#000000';
             ctx.fill();
             ctx.strokeStyle = '#ffffff';
             ctx.stroke();
             ctx.fillStyle = '#ffffff';
             ctx.fillText(action, 20, y + 20);
-            hotspots.push({ name: action, x: 10, y: y, width: 200, height: 30, hover: false, cooldown: false });
+            hotspots.push({ name: action, x: 10, y: y, width: 150, height: 30, hover: false, cooldown: false });
             y += 40;
         });
+    };
+
+    Renderer.prototype.drawCombat = function (player, other) {
+        // TODO: THIS SHIT
     };
 
     Renderer.prototype.drawInventory = function (player) {
@@ -93,6 +104,14 @@ define([
         ctx.fillText('HP: ' + player.getHp(), canvas.width - 190, 100);
         ctx.fillText('XP: ' + player.getXp() + '/' + player.getToLevel(), canvas.width - 190, 120);
         ctx.fillText('Cash: ' + player.getCash(), canvas.width - 190, 140);
+    };
+
+    Renderer.prototype.drawSubscreen = function (subscreen) {
+        inSubScreen = true;
+    };
+
+    Renderer.prototype.clearSubscreen = function () {
+        inSubScreen = false;
     };
 
     return Renderer;

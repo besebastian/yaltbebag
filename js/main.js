@@ -2,12 +2,14 @@ require([
     'Renderer',
     'Player',
     'Notifications',
-    'Cooldown'
+    'Cooldown',
+    'Input'
 ], function (
     Renderer,
     Player,
     Notifications,
-    Cooldown
+    Cooldown,
+    Input
 ) {
     'use strict';
     (function () {
@@ -15,6 +17,7 @@ require([
         var player;
         var notifications;
         var renderer;
+        var input;
 
         var autoSaveTimer;
 
@@ -27,6 +30,7 @@ require([
             player          = new Player('Geoff');
             notifications   = new Notifications();
             renderer        = new Renderer();
+            input           = new Input(renderer);
 
             autoSaveTimer = 0;
 
@@ -100,7 +104,6 @@ require([
 
         function render() {
             renderer.clear();
-            renderer.drawInventory(player);
             renderer.drawPlayer(player);
             renderer.drawActions(player);
         }

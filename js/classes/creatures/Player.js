@@ -38,13 +38,6 @@ define([
         this.resolveCombat(other);
     };
 
-    Player.prototype.resolveCombat = function (other) {
-        this.notifications.log('You are fighting a ' + other.name, 'bug');
-        // TODO: Figure a better way of resolving combat
-        //other.modHp(-this.getAttack());
-        //this.modHp(-other.getAttack());
-    };
-
     Player.prototype.actionAdventure = function () {
         if (Math.floor(Math.random() * 10) % 3 === 0) {
             var item = itemFactory.randomItem();

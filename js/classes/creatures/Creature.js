@@ -1,15 +1,18 @@
 define([
     'Notifications',
     'Item',
-    'ItemTypes'
+    'ItemTypes',
+    'Renderer'
 ], function (
     Notifications,
     Item,
-    ItemTypes
+    ItemTypes,
+    Renderer
 ) {
     'use strict';
 
     var SAVE_NAME = 'webgame-proto';
+    var renderer = new Renderer();
 
     function Creature(name) {
         this.name = name;
@@ -201,6 +204,11 @@ define([
         if (localStorage.getItem(SAVE_NAME) === null) {
             this.save();
         }
+    };
+
+    Creature.prototype.resolveCombat = function (other) {
+        this.notifications.log(this.getName() + ' is fighting a ' + other.name, 'bug');
+        renderer.drawCombat(this, other);
     };
 
     return Creature;

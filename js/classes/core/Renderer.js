@@ -62,6 +62,7 @@ define([
             ctx.strokeStyle = '#ffffff';
             ctx.stroke();
             ctx.fillStyle = '#ffffff';
+            ctx.font = defaultFont;
             ctx.fillText(action, 20, y + 20);
             hotspots.push({ name: action, x: 10, y: y, width: 150, height: 30, hover: false, cooldown: false });
             y += 40;
